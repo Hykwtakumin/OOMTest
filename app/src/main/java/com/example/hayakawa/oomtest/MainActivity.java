@@ -22,8 +22,10 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                StringBuilder sb = new StringBuilder();
+                while (true) {
+                    sb.append("1234567890");
+                }
             }
         });
     }
