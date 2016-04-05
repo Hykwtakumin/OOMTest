@@ -9,9 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import java.nio.ByteBuffer;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import javassist.CannotCompileException;
+import javassist.ClassPool;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -55,52 +58,16 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-//    public enum ByteBufferOOM{
-//        direct() {
-//            @Override
-//            public ByteBuffer alloc(int siz) {
-//                return ByteBuffer.allocateDirect(siz);
-//            }
-//        };
-//
-//        public abstract ByteBuffer alloc(int siz);
-//    }static ByteBuffer allocateDirect(int capacity)
-
-
-
-    public void onButtonClicked(){
-//        static ByteBuffer allocateDirect(int capacity){
-//
-//        }
-//                ByteBufferOOM allocator = ByteBufferOOM.valueOf(args[0]);
-//                Runtime runtime = Runtime.getRuntime();
-//
-//                List<ByteBuffer> buffers = new ArrayList<>();
-//
-//                // 10MiBの割り当てを10回繰り返す
-//                for (int idx = 0; idx < 10; idx++) {
-//                    System.gc();
-//                    Log.d("Runtime", "使用中Javaメモリ" + (int) ((runtime.totalMemory() - runtime.freeMemory()) / 1024) + "kb");
-//                    String memory = "空きネイティブヒープ=" + Long.toString(Debug.getNativeHeapFreeSize() / 1024) + "kb" + // 空きヒープサイズ
-//                            ", 使用中ネイティブヒープ=  " + Long.toString(Debug.getNativeHeapAllocatedSize() / 1024) + "kb" + // 使用中ピープサイズ
-//                            ", 確保したネイティブヒープ=" + Long.toString(Debug.getNativeHeapSize() / 1024) + "kb"; // 確保しているヒープサイズ
-//                    Log.d("Heap", memory);
-//
-//                    ByteBuffer buf = allocator.alloc(1024 * 1024 * 10);
-//                    buffers.add(buf);
-//                }
-        List<ByteBuffer> buffers = new ArrayList<>();
-        Runtime runtime = Runtime.getRuntime();
-        for (int idx = 0; idx < 10; idx++){
-            ByteBuffer buf = ByteBuffer.allocateDirect(10 * 1024 * 1024);
-            buffers.add(buf);
-            Log.d("Runtime", "使用中Javaメモリ" + (int) ((runtime.totalMemory() - runtime.freeMemory()) / 1024) + "kb");
-                    String memory = "空きネイティブヒープ=" + Long.toString(Debug.getNativeHeapFreeSize() / 1024) + "kb" + // 空きヒープサイズ
-                            ", 使用中ネイティブヒープ=  " + Long.toString(Debug.getNativeHeapAllocatedSize() / 1024) + "kb" + // 使用中ピープサイズ
-                            ", 確保したネイティブヒープ=" + Long.toString(Debug.getNativeHeapSize() / 1024) + "kb"; // 確保しているヒープサイズ
-                    Log.d("Heap", memory);
-        }
-
+    public void onButtonClicked() {
+        ClassPool pool = ClassPool.getDefault();
+        for (int i = 0; i < Integer.MAX_VALUE; i++) {
+            String className = String.format("MyClass%d", i);
+            try {
+                pool.makeClass(className).toClass();
+            } catch (CannotCompileException e) {
+                e.printStackTrace();
             }
         }
+    }
+}
 
