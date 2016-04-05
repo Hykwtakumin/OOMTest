@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 pool.makeClass(className).toClass();
             } catch (CannotCompileException e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         }
     }
