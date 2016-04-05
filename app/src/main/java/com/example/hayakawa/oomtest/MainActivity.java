@@ -59,9 +59,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onButtonClicked() {
+        Runtime runtime = Runtime.getRuntime();
         ClassPool pool = ClassPool.getDefault();
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
             String className = String.format("MyClass%d", i);
+            Log.d("Runtime", "使用中Javaメモリ" + (int)( (runtime.totalMemory() - runtime.freeMemory())/1024) + "kb" );
+
+            String memory = "空きネイティブヒープ=" + Long.toString(Debug.getNativeHeapFreeSize() / 1024) + "kb" + // 空きヒープサイズ
+                    ", 使用中ネイティブヒープ=  " + Long.toString(Debug.getNativeHeapAllocatedSize() / 1024) + "kb" + // 使用中ピープサイズ
+                    ", 確保したネイティブヒープ=" + Long.toString(Debug.getNativeHeapSize() / 1024) + "kb"; // 確保しているヒープサイズ
+            Log.d("Heap", memory);
             try {
                 pool.makeClass(className).toClass();
             } catch (CannotCompileException e) {
