@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         List<ByteBuffer> buffers = new ArrayList<>();
         Runtime runtime = Runtime.getRuntime();
-        for (int idx = 0; idx < 10; idx++){
+        for (int idx = 0; idx < 100; idx++){
             ByteBuffer buf = ByteBuffer.allocateDirect(10 * 1024 * 1024);
             buffers.add(buf);
             Log.d("Runtime", "使用中Javaメモリ" + (int) ((runtime.totalMemory() - runtime.freeMemory()) / 1024) + "kb");
