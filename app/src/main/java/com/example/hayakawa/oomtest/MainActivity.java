@@ -24,11 +24,6 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                StringBuilder sb = new StringBuilder();
-//                while (true) {
-//
-//                }
-
                 //スレッドを作り続ける
                 while (true) {
                     new Thread() {
