@@ -1,10 +1,12 @@
 package com.example.hayakawa.oomtest;
 
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,9 +24,31 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                StringBuilder sb = new StringBuilder();
+//                StringBuilder sb = new StringBuilder();
+//                while (true) {
+//
+//                }
+
+                //スレッドを作り続ける
                 while (true) {
-                    sb.append("1234567890");
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(10000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
+                    Runtime runtime = Runtime.getRuntime();
+                    Log.d("Runtime", "使用中Javaメモリ" + (int)( (runtime.totalMemory() - runtime.freeMemory())/1024) + "kb" );
+
+                    String memory = "空きネイティブヒープ=" + Long.toString(Debug.getNativeHeapFreeSize() / 1024) + "kb" + // 空きヒープサイズ
+                            ", 使用中ネイティブヒープ=  " + Long.toString(Debug.getNativeHeapAllocatedSize() / 1024) + "kb" + // 使用中ピープサイズ
+                            ", 確保したネイティブヒープ=" + Long.toString(Debug.getNativeHeapSize() / 1024) + "kb"; // 確保しているヒープサイズ
+                    Log.i("Heap", memory);
+
                 }
             }
         });
