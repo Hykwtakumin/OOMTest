@@ -57,16 +57,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void onButtonClicked(){
 
-        List<ByteBuffer> buffers = new ArrayList<>();
+//        List<ByteBuffer> buffers = new ArrayList<>();
+//        Runtime runtime = Runtime.getRuntime();
+//        for (int idx = 0; idx < 100; idx++){
+//            ByteBuffer buf = ByteBuffer.allocateDirect(10 * 1024 * 1024);
+//            buffers.add(buf);
+//            Log.d("Runtime", "使用中Javaメモリ" + (int) ((runtime.totalMemory() - runtime.freeMemory()) / 1024) + "kb");
+//                    String memory = "空きネイティブヒープ=" + Long.toString(Debug.getNativeHeapFreeSize() / 1024) + "kb" + // 空きヒープサイズ
+//                            ", 使用中ネイティブヒープ=  " + Long.toString(Debug.getNativeHeapAllocatedSize() / 1024) + "kb" + // 使用中ピープサイズ
+//                            ", 確保したネイティブヒープ=" + Long.toString(Debug.getNativeHeapSize() / 1024) + "kb"; // 確保しているヒープサイズ
+//                    Log.d("Heap", memory);
+//        }
+        ByteBuffer.allocateDirect(10*1024*1024);
         Runtime runtime = Runtime.getRuntime();
-        for (int idx = 0; idx < 100; idx++){
-            ByteBuffer buf = ByteBuffer.allocateDirect(10 * 1024 * 1024);
-            buffers.add(buf);
+
+        while (true){
+
             Log.d("Runtime", "使用中Javaメモリ" + (int) ((runtime.totalMemory() - runtime.freeMemory()) / 1024) + "kb");
-                    String memory = "空きネイティブヒープ=" + Long.toString(Debug.getNativeHeapFreeSize() / 1024) + "kb" + // 空きヒープサイズ
-                            ", 使用中ネイティブヒープ=  " + Long.toString(Debug.getNativeHeapAllocatedSize() / 1024) + "kb" + // 使用中ピープサイズ
-                            ", 確保したネイティブヒープ=" + Long.toString(Debug.getNativeHeapSize() / 1024) + "kb"; // 確保しているヒープサイズ
-                    Log.d("Heap", memory);
+//            Log.d("Heap", "使用中Nativeメモリ" + Long.toString(Debug.getNativeHeapAllocatedSize() / 1024) + "kb");
+
         }
 
             }
